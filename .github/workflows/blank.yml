@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       number:
-        description: Enter a number
+        description: "Enter a number"
         required: true
-        default: "42"
-        type: string
 
 jobs:
-  print-number:
+  print:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Print the number
-        run: echo "Entered number: ${{ inputs.number }}"
+      - name: Print number
+        run: |
+          echo "Number: ${{ github.event.inputs.number }}"
