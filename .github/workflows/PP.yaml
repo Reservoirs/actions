@@ -8,6 +8,9 @@ on:
         required: true
         default: "42"
 
+permissions:
+  contents: write
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -25,5 +28,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add result.txt
-          git commit -m "Update result"
+
+          git diff --cached --quiet || git commit -m "Update result"
+
           git push
