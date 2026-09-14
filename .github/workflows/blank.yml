@@ -1,7 +1,17 @@
-name: Print
-on: workflow_dispatch
+name: Print Number
+
+on:
+  workflow_dispatch:
+    inputs:
+      number:
+        description: Enter a number
+        required: true
+        default: "42"
+        type: string
+
 jobs:
-  test:
+  print-number:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello"
+      - name: Print the number
+        run: echo "Entered number: ${{ inputs.number }}"
