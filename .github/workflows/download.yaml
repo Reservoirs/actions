@@ -1,4 +1,4 @@
-```yaml
+
 name: Download Multiple Files
 
 on:
@@ -60,4 +60,4 @@ jobs:
           git diff --cached --quiet || git commit -m "Add downloaded files"
 
           git push -u origin "$BRANCH"
-```
+
