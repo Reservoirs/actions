@@ -1,8 +1,17 @@
 import sys
+import urllib.request
+from pathlib import Path
 
-number = sys.argv[1]
+url = sys.argv[1]
 
-with open("result.txt", "w") as f:
-    f.write(f"Entered number: {number}\n")
+filename = url.split("/")[-1].split("?")[0]
 
-print(f"Saved result: {number}")
+if not filename:
+    filename = "downloaded_file"
+
+print(f"Downloading: {url}")
+print(f"Filename: {filename}")
+
+urllib.request.urlretrieve(url, filename)
+
+print(f"Downloaded successfully: {filename}")
