@@ -2,16 +2,27 @@ import sys
 import urllib.request
 from pathlib import Path
 
-url = sys.argv[1]
+if len(sys.argv) < 2:
+    print("No URLs provided")
+    sys.exit(1)
 
-filename = url.split("/")[-1].split("?")[0]
+urls = sys.argv[1].split(",")
 
-if not filename:
-    filename = "downloaded_file"
+for i, url in enumerate(urls, 1):
+    url = url.strip()
 
-print(f"Downloading: {url}")
-print(f"Filename: {filename}")
+    if not url:
+        continue
 
-urllib.request.urlretrieve(url, filename)
+    filename = url.rstrip("/").split("/")[-1]
 
-print(f"Downloaded successfully: {filename}")
+    print(f"[{i}/{len(urls)}] Downloading:")
+    print(url)
+    print(f"Saving as: {filename}")
+
+    urllib.request.urlretrieve(url, filename)
+
+    size = Path(filename).stat().st_size / (1024 * 1024)
+
+    print(f"Downloaded: {filename} ({size:.2f} MB)")
+    print("-" * 50)
