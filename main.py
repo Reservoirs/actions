@@ -1,11 +1,8 @@
-
 import sys
-
-if len(sys.argv) < 2:
-    print("Please enter a number.")
-    sys.exit(1)
 
 number = sys.argv[1]
 
-print(f"Entered number: {number}")
+with open("result.txt", "w") as f:
+    f.write(f"Entered number: {number}\n")
 
+print(f"Saved result: {number}")
