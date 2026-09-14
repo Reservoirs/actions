@@ -1,3 +1,4 @@
+```yaml
 name: Download Multiple Files
 
 on:
@@ -26,17 +27,37 @@ jobs:
         run: |
           python3 main.py "${{ github.event.inputs.urls }}"
 
-      - name: List downloaded files
+      - name: Read branch name
+        id: branch
         run: |
-          ls -lh
+          BRANCH=$(cat branch_name.txt)
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "Branch: $BRANCH"
 
-      - name: Push files
+      - name: Create branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          git fetch origin
+
+          BRANCH="${{ steps.branch.outputs.branch }}"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null 2>&1; then
+            echo "Branch already exists: $BRANCH"
+            git checkout "$BRANCH"
+          else
+            echo "Creating branch: $BRANCH"
+            git checkout -b "$BRANCH"
+          fi
+
+      - name: Commit and push files
+        run: |
+          BRANCH="${{ steps.branch.outputs.branch }}"
+
           git add .
 
-          git diff --cached --quiet || git commit -m "Download files"
+          git diff --cached --quiet || git commit -m "Add downloaded files"
 
-          git push
+          git push -u origin "$BRANCH"
+```
