@@ -1,17 +1,17 @@
-1  name: Print Number
-2  (empty)
-3  on:
-4    workflow_dispatch:
-5      inputs:
-6        number:
-7          description: 'Enter a number'
-8          required: true
-9          default: '42'
-10         type: string
-11 (empty)
-12 jobs:
-13   print-number:
-14     runs-on: ubuntu-latest
-15     steps:
-16       - name: Print the number
-17         run: echo "Entered number: ${{ inputs.number }}"
+name: Print Number
+
+on:
+  workflow_dispatch:
+    inputs:
+      number:
+        description: Enter a number
+        required: true
+        default: "42"
+        type: string
+
+jobs:
+  print-number:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the number
+        run: echo "Entered number: ${{ inputs.number }}"
